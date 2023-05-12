@@ -11,12 +11,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int btSelected = 0;
+
+  void handleOptionSelect(btIndex) {
+    if (btSelected != btIndex) {
+      setState(() {
+        btSelected = btIndex;
+      });
+    }
+  }
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    // setState(() {
+    // });
   }
 
   @override
@@ -59,34 +66,48 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   margin: const EdgeInsets.all(20),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      const Text(
-                        'Registrar pedido:',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
+                      if (btSelected == 1) ...[
+                        const TextField(
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                                labelText: 'Código do material')),
+                        const TextField(
+                            autocorrect: false,
+                            decoration: InputDecoration(labelText: 'Lote')),
+                        const TextField(
+                            autocorrect: false,
+                            decoration:
+                                InputDecoration(labelText: 'Descrição')),
+                        const TextField(
+                            autocorrect: false,
+                            decoration: InputDecoration(labelText: 'Cap')),
+                        const TextField(
+                            autocorrect: false,
+                            decoration: InputDecoration(labelText: 'Saldo')),
+                      ],
                       HomePageButton(
                           btText: "Registrar pedido",
-                          onBtPress: () => print("registrar"),
+                          onBtPress: () => btSelected == 1
+                              ? print("registrar")
+                              : handleOptionSelect(1),
                           btColor: Colors.blue),
-                      const TextField(
-                          autocorrect: false,
-                          decoration:
-                              InputDecoration(labelText: 'Código do material')),
-                      const TextField(
-                          autocorrect: false,
-                          decoration: InputDecoration(labelText: 'Lote')),
-                      const TextField(
-                          autocorrect: false,
-                          decoration: InputDecoration(labelText: 'Descrição')),
-                      const TextField(
-                          autocorrect: false,
-                          decoration: InputDecoration(labelText: 'Cap')),
                       HomePageButton(
                           btText: "Cancelar Pedido",
-                          onBtPress: () => print("registrar"),
+                          onBtPress: () => btSelected == 2
+                              ? print("Cancelar")
+                              : handleOptionSelect(2),
                           btColor: Colors.blue),
+                      if (btSelected == 2) ...[
+                        const TextField(
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                                labelText: 'Código do material')),
+                        const TextField(
+                            autocorrect: false,
+                            decoration: InputDecoration(labelText: 'Lote')),
+                      ],
                     ],
                   ),
                 ),
